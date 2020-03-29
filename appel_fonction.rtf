@@ -1,0 +1,582 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Consolas;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red0\green128\blue0;\red112\green48\blue160;\red85\green85\blue85;\red30\green30\blue30;\red47\green84\blue150;
+\red43\green145\blue175;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c0\c50196\c0;\csgenericrgb\c43922\c18824\c62745;\csgenericrgb\c33333\c33333\c33333;\csgenericrgb\c11765\c11765\c11765;\csgenericrgb\c18431\c32941\c58824;
+\csgenericrgb\c16863\c56863\c68627;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab708
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf2 #include\cf0  \cf3 <stdio.h>\cf0 \
+\
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf4 int\cf0  test_cdecl(\cf4 int\cf0  \cf2 x\cf0 , \cf4 const\cf0  \cf4 char\cf0  *\cf2 text\cf0 )\
+\{\
+   \cf4 const\cf0  \cf4 char\cf0  *ptr = \cf2 text\cf0 ;\
+   \cf4 while\cf0  (0 != *ptr)\
+   \{\
+      ptr++;\
+   \}\
+   \cf4 return\cf0  \cf2 x\cf0  + \cf4 int\cf0 ( ptr - \cf2 text\cf0  );\
+\}\
+\
+\
+\cf4 int\cf0  main( \cf4 int\cf0  \cf2 argc\cf0 , \cf4 char\cf0 * \cf2 argv\cf0 [] )\
+\{\
+   \cf5 // cdecl\cf0 \
+   \cf4 int\cf0  x = test_cdecl( 0, \cf3 "toto"\cf0  );\
+   printf( \cf3 "test_cdecl( 0, \\"toto\\" ) = %d\\n"\cf0 , x );\
+\
+   \cf4 return\cf0  0;\
+\pard\pardeftab708\li2160\ri-386\sa200\partightenfactor0
+\cf0 \}\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f1\fs22 \cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf6 int test_cdecl(int x, const char *text)\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1720  push        ebp  \cf0 \
+\cf7 009E1721  mov         ebp,esp  \cf0 \
+\cf7 009E1723  sub         esp,0CCh  \cf0 \
+\cf7 009E1729  push        ebx  \cf0 \
+\cf7 009E172A  push        esi  \cf0 \
+\cf7 009E172B  push        edi  \cf0 \
+\cf7 009E172C  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 009E1732  mov         ecx,33h  \cf0 \
+\cf7 009E1737  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 009E173C  rep stos    dword ptr es:[edi]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 const char *ptr = text;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E173E  mov         eax,dword ptr [text]  \cf0 \
+\cf7 009E1741  mov         dword ptr [ptr],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 while (0 != *ptr)\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1744  mov         eax,dword ptr [ptr]  \cf0 \
+\cf7 009E1747  movsx       ecx,byte ptr [eax]  \cf0 \
+\cf7 009E174A  test        ecx,ecx  \cf0 \
+\cf7 009E174C  je          test_cdecl+39h (09E1759h)  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 \{\
+      ptr++;\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E174E  mov         eax,dword ptr [ptr]  \cf0 \
+\cf7 009E1751  add         eax,1  \cf0 \
+\cf7 009E1754  mov         dword ptr [ptr],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1757  jmp         test_cdecl+24h (09E1744h)  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return x + int( ptr - text );\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1759  mov         eax,dword ptr [ptr]  \cf0 \
+\cf7 009E175C  sub         eax,dword ptr [text]  \cf0 \
+\cf7 009E175F  add         eax,dword ptr [x]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1762  pop         edi  \cf0 \
+\cf7 009E1763  pop         esi  \cf0 \
+\cf7 009E1764  pop         ebx  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1765  mov         esp,ebp  \cf0 \
+\cf7 009E1767  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 009E1768  ret  
+\f1\fs22 \cf0 \
+\pard\pardeftab708\ri-386\partightenfactor0
+
+\f0\fs19 \cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 int main( int argc, char* argv[] )\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1840  push        ebp  \cf0 \
+\cf7 009E1841  mov         ebp,esp  \cf0 \
+\cf7 009E1843  sub         esp,0CCh  \cf0 \
+\cf7 009E1849  push        ebx  \cf0 \
+\cf7 009E184A  push        esi  \cf0 \
+\cf7 009E184B  push        edi  \cf0 \
+\cf7 009E184C  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 009E1852  mov         ecx,33h  \cf0 \
+\cf7 009E1857  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 009E185C  rep stos    dword ptr es:[edi]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 // cdecl\
+   int x = test_cdecl( 0, "toto" );\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E185E  push        offset string "toto" (09E7B30h)  \cf0 \
+\cf7 009E1863  push        0  \cf0 \
+\cf7 009E1865  call        test_cdecl (09E1154h)  \cf0 \
+\cf7 009E186A  add         esp,8  \cf0 \
+\cf7 009E186D  mov         dword ptr [x],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 printf( "test_cdecl( 0, \\"toto\\" ) = %d\\n", x );\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1870  mov         eax,dword ptr [x]  \cf0 \
+\cf7 009E1873  push        eax  \cf0 \
+\cf7 009E1874  push        offset string "test_cdecl( 0, "toto" ) = %d\\n" (09E7B38h)  \cf0 \
+\cf7 009E1879  call        _printf (09E1339h)  \cf0 \
+\cf7 009E187E  add         esp,8  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return 0;\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1881  xor         eax,eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 009E1883  pop         edi  \cf0 \
+\cf7 009E1884  pop         esi  \cf0 \
+\cf7 009E1885  pop         ebx  \cf0 \
+\cf7 009E1886  add         esp,0CCh  \cf0 \
+\cf7 009E188C  cmp         ebp,esp  \cf0 \
+\cf7 009E188E  call        __RTC_CheckEsp (09E1122h)  \cf0 \
+\cf7 009E1893  mov         esp,ebp  \cf0 \
+\cf7 009E1895  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 009E1896  ret  
+\f1\fs22 \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-386\partightenfactor0
+
+\f0\fs19 \cf9 \
+\
+\pard\pardeftab708\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf4 int\cf0  \cf4 __stdcall\cf0  test_stdcall(\cf4 int\cf0  \cf2 x\cf0 , \cf4 const\cf0  \cf4 char\cf0  *\cf2 text\cf0 )\
+\{\
+   \cf4 const\cf0  \cf4 char\cf0  *ptr = \cf2 text\cf0 ;\
+   \cf4 while\cf0  (0 != *ptr)\
+   \{\
+      ptr++;\
+   \}\
+   \cf4 return\cf0  \cf2 x\cf0  + \cf4 int\cf0 (ptr - \cf2 text\cf0 );\
+\}\
+\
+\
+\cf4 int\cf0  main( \cf4 int\cf0  \cf2 argc\cf0 , \cf4 char\cf0 * \cf2 argv\cf0 [] )\
+\{\
+   \cf5 // stdcall\cf0 \
+   \cf4 int\cf0  x = test_stdcall(0, \cf3 "toto"\cf0 );\
+   printf(\cf3 "test_stdcall( 0, \\"toto\\" ) = %d\\n"\cf0 , x);\
+\
+   \cf4 return\cf0  0;\
+\pard\pardeftab708\li2160\ri-386\sa200\partightenfactor0
+\cf0 \}
+\f1\fs22 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 int __stdcall test_stdcall(int x, const char *text)\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A1770  push        ebp  \cf0 \
+\cf7 001A1771  mov         ebp,esp  \cf0 \
+\cf7 001A1773  sub         esp,0CCh  \cf0 \
+\cf7 001A1779  push        ebx  \cf0 \
+\cf7 001A177A  push        esi  \cf0 \
+\cf7 001A177B  push        edi  \cf0 \
+\cf7 001A177C  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 001A1782  mov         ecx,33h  \cf0 \
+\cf7 001A1787  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 001A178C  rep stos    dword ptr es:[edi]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 const char *ptr = text;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A178E  mov         eax,dword ptr [text]  \cf0 \
+\cf7 001A1791  mov         dword ptr [ptr],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 while (0 != *ptr)\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A1794  mov         eax,dword ptr [ptr]  \cf0 \
+\cf7 001A1797  movsx       ecx,byte ptr [eax]  \cf0 \
+\cf7 001A179A  test        ecx,ecx  \cf0 \
+\cf7 001A179C  je          test_stdcall+39h (01A17A9h)  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 \{\
+      ptr++;\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A179E  mov         eax,dword ptr [ptr]  \cf6 \
+\cf7 001A17A1  add         eax,1  \cf0 \
+\cf7 001A17A4  mov         dword ptr [ptr],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 \}\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A17A7  jmp         test_stdcall+24h (01A1794h)  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return x + int(ptr - text);\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A17A9  mov         eax,dword ptr [ptr]  \cf0 \
+\cf7 001A17AC  sub         eax,dword ptr [text]  \cf0 \
+\cf7 001A17AF  add         eax,dword ptr [x]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A17B2  pop         edi  \cf0 \
+\cf7 001A17B3  pop         esi  \cf0 \
+\cf7 001A17B4  pop         ebx  \cf0 \
+\cf7 001A17B5  mov         esp,ebp  \cf0 \
+\cf7 001A17B7  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 001A17B8  ret         8  \
+\pard\pardeftab708\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 int main( int argc, char* argv[] )\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A18B0  push        ebp  \cf0 \
+\cf7 001A18B1  mov         ebp,esp  \cf0 \
+\cf7 001A18B3  sub         esp,0CCh  \cf0 \
+\cf7 001A18B9  push        ebx  \cf0 \
+\cf7 001A18BA  push        esi  \cf0 \
+\cf7 001A18BB  push        edi  \cf0 \
+\cf7 001A18BC  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 001A18C2  mov         ecx,33h  \cf0 \
+\cf7 001A18C7  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 001A18CC  rep stos    dword ptr es:[edi]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 // stdcall\
+   int x = test_stdcall(0, "toto");\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A18CE  push        offset string "toto" (01A7B30h)  \cf0 \
+\cf7 001A18D3  push        0  \cf0 \
+\cf7 001A18D5  call        test_stdcall (01A137Ah)  \cf0 \
+\cf7 001A18DA  mov         dword ptr [x],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 printf("test_stdcall( 0, \\"toto\\" ) = %d\\n", x);\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A18DD  mov         eax,dword ptr [x]  \cf0 \
+\cf7 001A18E0  push        eax  \cf0 \
+\cf7 001A18E1  push        offset string "test_stdcall( 0, "toto" ) = %d\\n" (01A7B38h)  \cf0 \
+\cf7 001A18E6  call        _printf (01A1339h)  \cf0 \
+\cf7 001A18EB  add         esp,8  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return 0;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A18EE  xor         eax,eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 001A18F0  pop         edi  \cf0 \
+\cf7 001A18F1  pop         esi  \cf0 \
+\cf7 001A18F2  pop         ebx  \cf0 \
+\cf7 001A18F3  add         esp,0CCh  \cf0 \
+\cf7 001A18F9  cmp         ebp,esp  \cf0 \
+\cf7 001A18FB  call        __RTC_CheckEsp (01A1122h)  \cf0 \
+\cf7 001A1900  mov         esp,ebp  \cf0 \
+\cf7 001A1902  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 001A1903  ret  
+\f1\fs22 \cf0 \
+\pard\pardeftab708\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-386\partightenfactor0
+
+\f0\fs19 \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 int  __fastcall test_fastcall(int x, int y)\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 007317A0  push        ebp  \cf0 \
+\cf7 007317A1  mov         ebp,esp  \cf0 \
+\cf7 007317A3  sub         esp,0D8h  \cf0 \
+\cf7 007317A9  push        ebx  \cf0 \
+\cf7 007317AA  push        esi  \cf0 \
+\cf7 007317AB  push        edi  \cf0 \
+\cf7 007317AC  push        ecx  \cf0 \
+\cf7 007317AD  lea         edi,[ebp-0D8h]  \cf0 \
+\cf7 007317B3  mov         ecx,36h  \cf0 \
+\cf7 007317B8  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 007317BD  rep stos    dword ptr es:[edi]  \cf0 \
+\cf7 007317BF  pop         ecx  \cf0 \
+\cf7 007317C0  mov         dword ptr [y],edx  \cf0 \
+\cf7 007317C3  mov         dword ptr [x],ecx  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return x + y;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 007317C6  mov         eax,dword ptr [x]  \cf0 \
+\cf7 007317C9  add         eax,dword ptr [y]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 007317CC  pop         edi  \cf0 \
+\cf7 007317CD  pop         esi  \cf0 \
+\cf7 007317CE  pop         ebx  \cf0 \
+\cf7 007317CF  mov         esp,ebp  \cf0 \
+\cf7 007317D1  pop         ebp  \cf0 \
+\cf7 007317D2  ret\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 int main( int argc, char* argv[] )\
+\{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00731900  push        ebp  \cf0 \
+\cf7 00731901  mov         ebp,esp  \cf0 \
+\cf7 00731903  sub         esp,0CCh  \cf0 \
+\cf7 00731909  push        ebx  \cf0 \
+\cf7 0073190A  push        esi  \cf0 \
+\cf7 0073190B  push        edi  \cf0 \
+\cf7 0073190C  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 00731912  mov         ecx,33h  \cf0 \
+\cf7 00731917  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 0073191C  rep stos    dword ptr es:[edi]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 // fastcall\
+   int x = test_fastcall(5, 3);\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 0073191E  mov         edx,3  \cf0 \
+\cf7 00731923  mov         ecx,5  \cf0 \
+\cf7 00731928  call        test_fastcall (073113Bh)  \cf0 \
+\cf7 0073192D  mov         dword ptr [x],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 printf("test_fastcall( 5, 3 ) = %d\\n", x);\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00731930  mov         eax,dword ptr [x]  \cf0 \
+\cf7 00731933  push        eax  \cf0 \
+\cf7 00731934  push        offset string "test_fastcall( 5, 3 ) = %d\\n"... (0737B30h)  \cf0 \
+\cf7 00731939  call        _printf (0731343h)  \cf0 \
+\cf7 0073193E  add         esp,8  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 return 0;\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00731941  xor         eax,eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf6 \}\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00731943  pop         edi  \cf0 \
+\cf7 00731944  pop         esi  \cf0 \
+\cf7 00731945  pop         ebx  \cf0 \
+\cf7 00731946  add         esp,0CCh  \cf0 \
+\cf7 0073194C  cmp         ebp,esp  \cf0 \
+\cf7 0073194E  call        __RTC_CheckEsp (0731122h)  \cf0 \
+\cf7 00731953  mov         esp,ebp  \cf0 \
+\cf7 00731955  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 00731956  ret  
+\f1\fs22 \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf4 struct\cf0  \cf10 A\cf0 \
+\{\
+   \cf4 int\cf0  m_a;\
+\
+   A(\cf4 int\cf0  \cf2 value\cf0 ) : m_a(\cf2 value\cf0 )\
+   \{\
+   \}\
+\
+   \cf4 int\cf0  add(\cf4 int\cf0  \cf2 x\cf0 )\
+   \{\
+      m_a += \cf2 x\cf0 ;\
+      \cf4 return\cf0  m_a;\
+   \}\
+\};\
+\
+\
+\cf4 int\cf0  main( \cf4 int\cf0  \cf2 argc\cf0 , \cf4 char\cf0 * \cf2 argv\cf0 [] )\
+\{\
+   \cf5 // thiscall\cf0 \
+   \cf10 A\cf0  a(5);\
+   \cf4 int\cf0  x = a.add(3);\
+   printf(\cf3 "test_thiscall = %d\\n"\cf0 , x);\
+\
+   \cf4 return\cf0  0;\
+\pard\pardeftab708\li2160\ri-386\sa200\partightenfactor0
+\cf0 \}
+\f1\fs22 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf6 int add(int x)\
+   \{\
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005917A0  push        ebp  \cf0 \
+\cf7 005917A1  mov         ebp,esp  \cf0 \
+\cf7 005917A3  sub         esp,0CCh  \cf0 \
+\cf7 005917A9  push        ebx  \cf0 \
+\cf7 005917AA  push        esi  \cf0 \
+\cf7 005917AB  push        edi  \cf0 \
+\cf7 005917AC  push        ecx  \cf0 \
+\cf7 005917AD  lea         edi,[ebp-0CCh]  \cf0 \
+\cf7 005917B3  mov         ecx,33h  \cf0 \
+\cf7 005917B8  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 005917BD  rep stos    dword ptr es:[edi]  \cf0 \
+\cf7 005917BF  pop         ecx  \cf0 \
+\cf7 005917C0  mov         dword ptr [this],ecx  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8       \cf6 m_a += x;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005917C3  mov         eax,dword ptr [this]  \cf0 \
+\cf7 005917C6  mov         ecx,dword ptr [eax]  \cf0 \
+\cf7 005917C8  add         ecx,dword ptr [x]  \cf0 \
+\cf7 005917CB  mov         edx,dword ptr [this]  \cf0 \
+\cf7 005917CE  mov         dword ptr [edx],ecx  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8       \cf6 return m_a;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005917D0  mov         eax,dword ptr [this]  \cf0 \
+\cf7 005917D3  mov         eax,dword ptr [eax]  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    \cf6 \}\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005917D5  pop         edi  \cf0 \
+\cf7 005917D6  pop         esi  \cf0 \
+\cf7 005917D7  pop         ebx  \cf0 \
+\cf7 005917D8  mov         esp,ebp  \cf0 \
+\cf7 005917DA  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 005917DB  ret         4
+\f1\fs22 \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf8 int main( int argc, char* argv[] )\cf0 \
+\cf8 \{\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005919B0  push        ebp  \cf0 \
+\cf7 005919B1  mov         ebp,esp  \cf0 \
+\cf7 005919B3  sub         esp,0DCh  \cf0 \
+\cf7 005919B9  push        ebx  \cf0 \
+\cf7 005919BA  push        esi  \cf0 \
+\cf7 005919BB  push        edi  \cf0 \
+\cf7 005919BC  lea         edi,[ebp-0DCh]  \cf0 \
+\cf7 005919C2  mov         ecx,37h  \cf0 \
+\cf7 005919C7  mov         eax,0CCCCCCCCh  \cf0 \
+\cf7 005919CC  rep stos    dword ptr es:[edi]  \cf0 \
+\cf7 005919CE  mov         eax,dword ptr [__security_cookie (059A000h)]  \cf0 \
+\cf7 005919D3  xor         eax,ebp  \cf0 \
+\cf7 005919D5  mov         dword ptr [ebp-4],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    // thiscall\cf0 \
+\cf8    A a(5);\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005919D8  push        5  \cf0 \
+\cf7 005919DA  lea         ecx,[a]  \cf0 \
+\cf7 005919DD  call        A::A (0591073h)  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    int x = a.add(3);\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005919E2  push        3  \cf0 \
+\cf7 005919E4  lea         ecx,[a]  \cf0 \
+\cf7 005919E7  call        A::add (059123Ah)  \cf0 \
+\cf7 005919EC  mov         dword ptr [x],eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    printf("test_thiscall = %d\\n", x);\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 005919EF  mov         eax,dword ptr [x]  \cf0 \
+\cf7 005919F2  push        eax  \cf0 \
+\cf7 005919F3  push        offset string "test_thiscall = %d\\n" (0597B30h)  \cf0 \
+\cf7 005919F8  call        _printf (059134Dh)  \cf0 \
+\cf7 005919FD  add         esp,8  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8    return 0;\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00591A00  xor         eax,eax  \cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf8 \}\cf0 \
+\pard\pardeftab708\li3600\ri-386\partightenfactor0
+\cf7 00591A02  push        edx  \cf0 \
+\cf7 00591A03  mov         ecx,ebp  \cf0 \
+\cf7 00591A05  push        eax  \cf0 \
+\cf7 00591A06  lea         edx,ds:[591A34h]  \cf0 \
+\cf7 00591A0C  call        @_RTC_CheckStackVars@8 (0591280h)  \cf0 \
+\cf7 00591A11  pop         eax  \cf0 \
+\cf7 00591A12  pop         edx  \cf0 \
+\cf7 00591A13  pop         edi  \cf0 \
+\cf7 00591A14  pop         esi  \cf0 \
+\cf7 00591A15  pop         ebx  \cf0 \
+\cf7 00591A16  mov         ecx,dword ptr [ebp-4]  \cf0 \
+\cf7 00591A19  xor         ecx,ebp  \cf0 \
+\cf7 00591A1B  call        @__security_check_cookie@4 (0591294h)  \cf0 \
+\cf7 00591A20  add         esp,0DCh  \cf0 \
+\cf7 00591A26  cmp         ebp,esp  \cf0 \
+\cf7 00591A28  call        __RTC_CheckEsp (0591127h)  \cf0 \
+\cf7 00591A2D  mov         esp,ebp  \cf0 \
+\cf7 00591A2F  pop         ebp  \cf0 \
+\pard\pardeftab708\li3600\ri-386\sa200\partightenfactor0
+\cf7 00591A30  ret
+\f1\fs22 \cf0 \
+\pard\pardeftab708\ri-386\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+\cf0 \
+\pard\pardeftab708\li2160\ri-386\partightenfactor0
+
+\f0\fs19 \cf4 struct\cf0  \cf10 VA\cf0 \
+\{\
+   \cf4 int\cf0  m_x;\
+\
+   VA( \cf4 int\cf0  \cf2 x\cf0  ) : m_x( \cf2 x\cf0  ) \{\}\
+\
+   \cf4 virtual\cf0  ~VA() \{\}\
+\
+   \cf4 virtual\cf0  \cf4 int\cf0  v_op(\cf4 int\cf0  \cf2 y\cf0 )\
+   \{\
+      m_x += \cf2 y\cf0 ;\
+      \cf4 return\cf0  m_x;\
+   \}\
+\};\
+\
+\
+\cf4 struct\cf0  \cf10 VB\cf0  : \cf4 public\cf0  \cf10 VA\cf0 \
+\{\
+   VB() : \cf10 VA\cf0 (0) \{\}\
+\
+   \cf4 virtual\cf0  ~VB() \{\}\
+\
+   \cf4 virtual\cf0  \cf4 int\cf0  v_op(\cf4 int\cf0  \cf2 y\cf0 )\
+   \{\
+      m_x -= \cf2 y\cf0 ;\
+      \cf4 return\cf0  m_x;\
+   \}\
+\};\
+\
+\cf4 int\cf0  main( \cf4 int\cf0  \cf2 argc\cf0 , \cf4 char\cf0 * \cf2 argv\cf0 [] )\
+\{\
+   \cf5 // thiscall\cf0 \
+   \cf10 VA\cf0  *pVA = \cf4 new\cf0  \cf10 VB\cf0 ();\
+   \cf4 int\cf0  x = pVA->v_op(3);\
+   printf(\cf3 "pVA->v_op(3) = %d\\n"\cf0 , x);\
+\
+   \cf4 return\cf0  0;\
+\pard\pardeftab708\li2160\ri-386\sa200\partightenfactor0
+\cf0 \}
+\f1\fs22 \
+}
